@@ -13,7 +13,7 @@
                         <textarea class="form-control" id="url" name="url" rows="2" required></textarea>
                     </div>
                     <div class="text-center">
-                        <button type="submit" class="btn btn-success">Save</button>
+                        <button type="submit" class="btn btn-success">Save <i class="fal fa-save"></i></button>
                     </div>
                 </form>
             </div>
@@ -28,10 +28,16 @@
                     <div class="card">
                         <ul class="list-group list-group-flush">
                             {% for u in s.username_set.all %}
-                                <li class="list-group-item">
-                                    {{u.username}}
+                                <li class="list-group-item py-3">
+                                    <a href="{% url 'main:view_username' u.username %}" class="text-decoration-none fs-5">{{u.username}}</a>
+
                                     <div class="float-end">
-                                        <a href="{% url 'main:change_state' u.id %}" class="btn btn-outline-secondary btn-sm"><i class="fal fa-arrow-alt-down"></i></a>
+                                        <a href="{% url 'main:change_state' u.id %}" class="btn btn-outline-secondary btn-sm mx-1">
+                                            <i class="fal fa-arrow-alt-down"></i>
+                                        </a>
+                                        <a href="https://instagram.com/{{u.username}}" class="btn btn-outline-info btn-sm" target="_blank">
+                                            <i class="fal fa-external-link"></i>
+                                        </a>
                                     </div>
                                 </li>
                             {% endfor %}
