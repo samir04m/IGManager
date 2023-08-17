@@ -4,49 +4,51 @@
 
 {% block contenido %}
     <div class="container py-2">
-        <div class="card mb-3">
-            <div class="card-body">
-                <form action="{% url 'main:create_username' %}" method="POST">
-                    {% csrf_token %}
-                    <div class="mb-3">
-                        <label for="url" class="form-label">Profile URL</label>
-                        <textarea class="form-control" id="url" name="url" rows="2" required></textarea>
-                    </div>
-                    <div class="text-center">
-                        <button type="submit" class="btn btn-success">Save <i class="fal fa-save"></i></button>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        {% for s in states %}
-            <div class="py-3">
-                <h2 data-bs-toggle="collapse" href="#collapse{{s.id}}" role="button" aria-expanded="false" aria-controls="collapse{{s.id}}">
-                    {{ s.name }} <span class="badge text-bg-dark">{{ s.username_set.all.count }}</span> 
-                </h2>
-                <div class="collapse" id="collapse{{s.id}}">
-                    <div class="card">
-                        <ul class="list-group list-group-flush">
-                            {% for u in s.username_set.all %}
-                                <li class="list-group-item py-3">
-                                    <a href="{% url 'main:view_username' u.username %}" class="text-decoration-none fs-5">{{u.username}}</a>
-
-                                    <div class="float-end">
-                                        <a href="{% url 'main:change_state' u.id %}" class="btn btn-outline-secondary btn-sm mx-1">
-                                            <i class="fal fa-arrow-alt-down"></i>
-                                        </a>
-                                        <a href="https://instagram.com/{{u.username}}" class="btn btn-outline-info btn-sm" target="_blank">
-                                            <i class="fal fa-external-link"></i>
-                                        </a>
-                                    </div>
-                                </li>
-                            {% endfor %}
-                        </ul>
+        <div class="row">
+            <div class="col offset-md-3 col-md-6">
+                <div class="card mb-3 shadow">
+                    <div class="card-body">
+                        <form action="{% url 'main:create_username' %}" method="POST">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="url" class="form-label">Profile URL</label>
+                                <textarea class="form-control" id="url" name="url" rows="2" required></textarea>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-success">Save <i class="fal fa-save"></i></button>
+                            </div>
+                        </form>
                     </div>
                 </div>
-
+                
+                {% for s in states %}
+                    <div class="py-3">
+                        <h2 data-bs-toggle="collapse" href="#collapse{{s.id}}" role="button" aria-expanded="false" aria-controls="collapse{{s.id}}">
+                            {{ s.name }} <span class="badge text-bg-dark">{{ s.username_set.all.count }}</span> 
+                        </h2>
+                        <div class="collapse" id="collapse{{s.id}}">
+                            <div class="card">
+                                <ul class="list-group list-group-flush">
+                                    {% for u in s.username_set.all %}
+                                        <li class="list-group-item py-3">
+                                            <a href="{% url 'main:view_username' u.username %}" class="text-decoration-none fs-5">{{u.username}}</a>
+        
+                                            <div class="float-end">
+                                                <a href="{% url 'main:change_state' u.id %}" class="btn btn-outline-secondary btn-sm mx-1">
+                                                    <i class="fal fa-arrow-alt-down"></i>
+                                                </a>
+                                                <a href="https://instagram.com/{{u.username}}" class="btn btn-outline-info btn-sm" target="_blank">
+                                                    <i class="fal fa-external-link"></i>
+                                                </a>
+                                            </div>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
             </div>
-        {% endfor %}
-
+        </div>
     </div>
 {% endblock %}

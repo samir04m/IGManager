@@ -4,38 +4,42 @@
 
 {% block contenido %}
     <div class="container py-2">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{% url 'main:home' %}">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">{{username.username}}</li>
-            </ol>
-        </nav>
-
-        <h1 class="text-center mb-3">
-            <a href="https://instagram.com/{{username.username}}" class="text-decoration-none" target="_blank">{{username.username}}</a>
-        </h1>
-
-        <form action="{% url 'main:update_username' username.id %}" method="post">
-            {% csrf_token %}
-            <div class="mb-3">
-                <label for="state" class="form-label">State</label>
-                <select class="form-select" name="state" id="state" required>
-                    {% for s in states %}
-                        {% if s.id == username.state.id %}
-                            <option value="{{s.id}}" selected>{{s.name}}</option>
-                        {% else %}
-                            <option value="{{s.id}}">{{s.name}}</option>
-                        {% endif %}
-                    {% endfor %}
-                </select>
+        <div class="row">
+            <div class="col offset-md-3 col-md-6">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'main:home' %}">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{username.username}}</li>
+                    </ol>
+                </nav>
+        
+                <h1 class="text-center mb-3">
+                    <a href="https://instagram.com/{{username.username}}" class="text-decoration-none" target="_blank">{{username.username}}</a>
+                </h1>
+        
+                <form action="{% url 'main:update_username' username.id %}" method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="state" class="form-label">State</label>
+                        <select class="form-select" name="state" id="state" required>
+                            {% for s in states %}
+                                {% if s.id == username.state.id %}
+                                    <option value="{{s.id}}" selected>{{s.name}}</option>
+                                {% else %}
+                                    <option value="{{s.id}}">{{s.name}}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="info" class="form-label">Information</label>
+                        <textarea class="form-control" name="info" id="info" rows="3">{% if username.info %}{{username.info}}{% endif %}</textarea>
+                    </div>
+                    <div class="text-center">
+                        <button class="btn btn-success" type="submit">Update <i class="fal fa-save"></i></button>
+                    </div>
+                </form>
             </div>
-            <div class="mb-3">
-                <label for="info" class="form-label">Information</label>
-                <textarea class="form-control" name="info" id="info" rows="3">{% if username.info %}{{username.info}}{% endif %}</textarea>
-            </div>
-            <div class="text-center">
-                <button class="btn btn-success" type="submit">Update <i class="fal fa-save"></i></button>
-            </div>
-        </form>
+        </div>
     </div>
 {% endblock %}
