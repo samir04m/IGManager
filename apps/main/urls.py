@@ -9,4 +9,5 @@ urlpatterns = [
     path('u/<str:username>/del/', delete_username, name='delete_username'),
     path('update-username/<int:username_id>/', update_username, name='update_username'),
     path('change-state/<int:username_id>/', change_state, name='change_state'),
+    path('redirectToUsername/', redirectToUsername, name='redirectToUsername'),
 ]

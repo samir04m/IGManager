@@ -14,17 +14,19 @@ def create_username(request):
         igUsername = getUsernameFromUrl(request.POST.get('url'))
         username = Username.objects.filter(username=igUsername).first()
         if username:
+            request.session['redirectToUsername'] = username.username
             messages.info(request, 'Username is currently in "{}"'.format(username.state.name), extra_tags='info')
         else:
             if igUsername:
                 try:
                     username = Username(
                         username = igUsername,
-                        state = State.objects.get(order=1)
+                        state = State.objects.get(id=int(request.POST.get('state')))
                     )
                     username.save()
                     messages.success(request, 'Username saved', extra_tags='success')
                 except Exception as ex:
+                    print('Exception -> ', ex)
                     messages.error(request, 'Failed to add username', extra_tags='error')
     return redirect(request.META.get('HTTP_REFERER'))
 
@@ -71,3 +73,10 @@ def delete_username(request, username):
     messages.success(request, 'Username "{}" was removed'.format(uname), extra_tags='success')
     return redirect('main:home')
 
+def redirectToUsername(request):
+    username = request.session['redirectToUsername']
+    if username:
+        request.session['redirectToUsername'] = None
+        return redirect('main:view_username', username)
+    else:
+        return redirect('main:home')

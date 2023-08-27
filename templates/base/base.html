@@ -36,8 +36,9 @@
             Swal.fire({
                 icon: '{{messages|getMessage:"icon" }}',
                 title: '{{messages|getMessage }}',
+                footer: '{% if request.session.redirectToUsername %}<a href="{% url "main:redirectToUsername" %}">Ver el perfil</a>{% endif %}',
                 showConfirmButton: false,
-                timer: 2500
+                timer: 3000
             });
         </script>
     {% endif %}
